@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://portal/portal.shader" type="Shader" id=1]
+[ext_resource path="res://portal/background.png" type="Texture" id=2]
+[ext_resource path="res://portal/Portal.gd" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 1, 0.501961, 0, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+flip_faces = true
+size = Vector3( 8, 3, 8 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.768627, 0.227451, 0.0196078, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 0, 1, 1 )
+
+[sub_resource type="QuadMesh" id=8]
+size = Vector2( 1, 2 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.109804, 0.647059, 0.937255, 1 )
+
+[sub_resource type="SphereMesh" id=11]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/tex = ExtResource( 2 )
+
+[node name="Portal" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Room1" type="MeshInstance" parent="."]
+material_override = SubResource( 2 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="OmniLight" type="OmniLight" parent="Room1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="Object" type="MeshInstance" parent="Room1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2 )
+material_override = SubResource( 4 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Portal" type="MeshInstance" parent="Room1"]
+transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0.981281, 0.0107989, 0.000444889 )
+material_override = SubResource( 12 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="Room1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+current = true
+
+[node name="Room2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0 )
+material_override = SubResource( 9 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="OmniLight" type="OmniLight" parent="Room2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shadow_enabled = true
+omni_range = 10.0
+
+[node name="Object" type="MeshInstance" parent="Room2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2 )
+material_override = SubResource( 10 )
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="Viewport" type="Viewport" parent="Room2"]
+size = Vector2( 1024, 600 )
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="Room2/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 4 )
+current = true
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
